@@ -28,8 +28,8 @@ public class InfoController {
     private String description;
 
     /**
-     * Health check endpoint: kiểm tra service có đang chạy không
-     * Sử dụng bởi Docker HEALTHCHECK, Kubernetes Liveness Probe, load balancer...
+     * Health check endpoint
+     * GET /api/v1/health
      */
     @GetMapping("/health")
     public ResponseEntity<Map<String, Object>> health() {
@@ -42,7 +42,8 @@ public class InfoController {
     }
 
     /**
-     * Info endpoint: trả về thông tin tổng quan về service và danh sách API
+     * Info endpoint
+     * GET /api/v1/info
      */
     @GetMapping("/info")
     public ResponseEntity<Map<String, Object>> info() {
@@ -54,14 +55,14 @@ public class InfoController {
                 System.getenv().getOrDefault("SPRING_PROFILES_ACTIVE", "local"));
         response.put("java_version", System.getProperty("java.version"));
         response.put("endpoints", Map.of(
-                "list_users",   "GET    /api/v1/users",
-                "get_user",     "GET    /api/v1/users/{id}",
-                "create_user",  "POST   /api/v1/users",
-                "update_user",  "PUT    /api/v1/users/{id}",
-                "delete_user",  "DELETE /api/v1/users/{id}",
-                "search",       "GET    /api/v1/users/search?q={keyword}",
-                "filter_role",  "GET    /api/v1/users/role/{ADMIN|LECTURER|STUDENT}",
-                "health",       "GET    /api/v1/health"
+                "list_users",  "GET    /api/v1/users",
+                "get_user",    "GET    /api/v1/users/{id}",
+                "create_user", "POST   /api/v1/users",
+                "update_user", "PUT    /api/v1/users/{id}",
+                "delete_user", "DELETE /api/v1/users/{id}",
+                "search",      "GET    /api/v1/users/search?q={keyword}",
+                "filter_role", "GET    /api/v1/users/role/{ADMIN|LECTURER|STUDENT}",
+                "health",      "GET    /api/v1/health"
         ));
         return ResponseEntity.ok(response);
     }
