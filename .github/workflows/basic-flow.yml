@@ -10,7 +10,7 @@ on:
 # Các cng việc cần thực hiện
 jobs:
   build-and-test:
-    name: "Xây dựng và kiểm thử"
+    name: "Xây dựng và kiểm thử dự án spring boot"
     runs-on: ubuntu-latest
     # Các bước để chạy job này
     steps:
