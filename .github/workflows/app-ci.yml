@@ -1,0 +1,46 @@
+name: app-ci
+
+# Trigger CI tự động khi có push lên nhánh main hoặc develop
+on:
+  push:
+    branches:
+      - main
+      - develop
+
+permissions:
+  contents: read
+
+jobs:
+  build-and-test:
+    name: Build và Test Spring Boot
+    runs-on: ubuntu-latest
+
+    steps:
+      # B1: Check out mã nguồn từ repository để workflow có thể đọc và build project
+      - name: B1 - Checkout mã nguồn
+        uses: actions/checkout@v4
+
+      # B2: Cài đặt JDK 17 Temurin và bật cache cho Maven để tăng tốc độ build
+      - name: B2 - Thiết lập JDK 17 Temurin
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+          cache: maven
+
+      # B3: Biên dịch project và chạy unit test bằng Maven.
+      # Maven package sẽ compile code, chạy test và tạo file JAR để đóng gói ứng dụng.
+      - name: B3 - Biên dịch và chạy unit test
+        run: mvn --batch-mode clean package
+
+      # B4: Xuất báo cáo test (surefire reports) ra artifact để dễ kiểm tra khi test fail.
+      # Dùng if: always() để vẫn lưu artifact dù build/test lỗi.
+      - name: B4 - Xuất báo cáo test vào artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-reports
+          path: |
+            target/surefire-reports/
+            target/*.jar
+          if-no-files-found: warn

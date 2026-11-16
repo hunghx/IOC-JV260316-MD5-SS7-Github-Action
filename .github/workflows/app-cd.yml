@@ -1,0 +1,5 @@
+# Khi có code đc đẩy lên nhánh main hoặc có pull request megre vào nhánh main
+# B1: check code , (đăng nhập vào nền tảng lưu trữ image)
+# B2 : build image (Docker file)
+# B3: SSH tới server
+# B4: pull image từ nền tảng dockerhub hoặc ghcr , chạy container từ image
