@@ -13,7 +13,7 @@ permissions:
 jobs:
   build-and-test:
     name: Build và Test Spring Boot
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
 
     steps:
       # B1: Check out mã nguồn từ repository để workflow có thể đọc và build project
